@@ -30,6 +30,17 @@ async function create(data) {
   return post;
 }
 
+
+function updateThen(id,changes){
+  db('posts').where({id}).update(changes)
+    .then((count) =>{
+      return count
+    })
+    .catch(er =>{
+      throw er;
+    })
+}
+
 async function update(id,changes) {
   // return Promise.resolve('update wired')
   const count = await db('posts').where({id}).update(changes);
