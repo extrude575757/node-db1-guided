@@ -23,14 +23,22 @@ async function getById(id) {
   return post;
 }
 
-function create() {
-  return Promise.resolve('create wired')
+async function create(data) {
+  // return Promise.resolve('create wired')
+  const [res] = await db('posts').insert(data);
+  const post = await getById(res)
+  return post;
 }
 
-function update() {
-  return Promise.resolve('update wired')
+async function update(id,changes) {
+  // return Promise.resolve('update wired')
+  const count = await db('posts').where({id}).update(changes);
+  return count;
 }
 
-function remove() {
-  return Promise.resolve('delete wired')
+async function remove(id) {
+  // return Promise.resolve('delete wired')
+
+  const count = await db('posts').where({id}).del();
+  return count;
 }

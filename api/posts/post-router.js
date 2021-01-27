@@ -23,27 +23,36 @@ router.get('/:id', checkId, async (req, res, next) => {
 })
 
 router.post('/', checkPayload, async (req, res, next) => {
+  
+  const body = req.body;
   try {
-    const data = await Post.create()
+    const data = await Post.create(body)
     res.json(data)
   } catch (err) {
     next(err)
   }
 })
 
-router.put('/:id', checkId, async (req, res,next ) => {
+router.put('/:id', checkId, checkPayload,async (req, res,next ) => {
+  
+  const {id} = req.params;
+  const changes = req.body;
   try {
-    const data = await Post.update()
-    res.json(data)
+    // const data = await Post.update()
+    // res.json(data)
+    const data = await Post.update(id,changes)
+    res.json(data);
   } catch (err) {
     next(err)
   }
 })
 
-router.delete('/:id', checkId, checkPayload, async (req, res, next) => {
+router.delete('/:id', checkId, async (req, res, next) => {
+  const {id} = req.params;
+  
   try {
-    const data = await Post.remove()
-    res.json(data)
+    const data = await Post.remove(id)
+    res.json({count:data})
   } catch (err) {
     next(err)
   }
@@ -76,7 +85,14 @@ async function checkId(req, res, next) {
 }
 
 function checkPayload(req, res, next) {
-  next()
+  const body = req.body;
+  if(!body.title || !body.contents){
+    const err = new Error('body must include title and contents')
+    err.statusCode = 400;
+    next(err);
+  }else{
+    next()
+  }
 }
 
 module.exports = router
