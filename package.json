@@ -10,8 +10,14 @@
     "repository": "https://github.com/LambdaSchool/node-db1-guided.git",
     "license": "MIT",
     "dependencies": {
+<<<<<<< HEAD
         "express": "^4.17.1",
         "knex": "^0.21.16",
+=======
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "knex": "^0.21.15",
+>>>>>>> fba04228007010d7dcd7c22ca6c40c7b6b8c42dc
         "sqlite3": "^5.0.1"
     },
     "devDependencies": {

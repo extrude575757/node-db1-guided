@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 const db = require('../../data/db-config.js')
 
+=======
+const db = require('../../data/db-config')
+>>>>>>> fba04228007010d7dcd7c22ca6c40c7b6b8c42dc
 
 module.exports = {
   get,
@@ -9,6 +13,7 @@ module.exports = {
   remove,
 }
 
+<<<<<<< HEAD
 async function get() {
   // return Promise.resolve('get wired')
   const sql =  await db('posts').toSQL(); // or toString()
@@ -28,6 +33,29 @@ async function create(data) {
   const [res] = await db('posts').insert(data);
   const post = await getById(res)
   return post;
+=======
+function get() {
+  // SELECT * FROM posts;
+  // return db('posts')
+  // SELECT id, title, contents FROM posts;
+  return db()
+    .from('posts')
+    .select('id as post_id', 'title', 'contents')
+}
+
+function getById(id) {
+  // SELECT * FROM posts WHERE id = 1;
+  // return db('posts').where({ id, bar: 'bar' })
+  return db('posts').where('id', id).first()
+}
+
+function create(post) {
+  // INSERT INTO posts (title, contents) VALUES ('foo', 'bar');
+  return db('posts').insert(post)
+    .then(([id]) => {
+      return getById(id)
+    })
+>>>>>>> fba04228007010d7dcd7c22ca6c40c7b6b8c42dc
 }
 
 
