@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/', async (req, res, next) => {
   try {
     const data = await Post.get()
-    res.json(data)
+    res.status(200).json(data)
   } catch (err) {
     next(err)
   }
@@ -49,6 +49,7 @@ router.delete('/:id', checkId, checkPayload, async (req, res, next) => {
 })
 
 router.use((err, req, res, next) => {
+  err.statusCode = err.statusCode ? err.statusCode : 500;
   res.status(500).json({ message: err.message, stack: err.stack })
 })
 

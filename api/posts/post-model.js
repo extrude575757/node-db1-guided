@@ -1,3 +1,6 @@
+const db = require('../../data/db-config.js')
+
+
 module.exports = {
   get,
   getById,
@@ -6,8 +9,12 @@ module.exports = {
   remove,
 }
 
-function get() {
-  return Promise.resolve('get wired')
+async function get() {
+  // return Promise.resolve('get wired')
+  const sql = await await db('posts').toSQL(); // or toString()
+
+  const posts = await db('posts');
+  return posts;
 }
 
 function getById() {
