@@ -17,7 +17,7 @@ async function get() {
   return posts;
 }
 
-function getById(id) {
+async function getById(id) {
   // return Promise.resolve('getById wired')
   const [post] = await db('posts').where({id});
   return post;

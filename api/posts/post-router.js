@@ -54,7 +54,7 @@ router.use((err, req, res, next) => {
   res.status(500).json({ message: err.message, stack: err.stack })
 })
 
-function checkId(req, res, next) {
+async function checkId(req, res, next) {
   const {id} = req.params;
   try{
     const post = await Post.getById(id);
