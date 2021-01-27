@@ -11,14 +11,16 @@ module.exports = {
 
 async function get() {
   // return Promise.resolve('get wired')
-  const sql = await await db('posts').toSQL(); // or toString()
+  const sql =  await db('posts').toSQL(); // or toString()
 
   const posts = await db('posts');
   return posts;
 }
 
-function getById() {
-  return Promise.resolve('getById wired')
+function getById(id) {
+  // return Promise.resolve('getById wired')
+  const [post] = await db('posts').where({id});
+  return post;
 }
 
 function create() {

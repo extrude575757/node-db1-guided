@@ -14,8 +14,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', checkId, async (req, res, next) => {
   try {
-    const data = await Post.getById()
-    res.json(data)
+    // const data = await Post.getById()
+    // res.json(data)
+    res.status(200).json(req.post)
   } catch (err) {
     next(err)
   }
@@ -54,7 +55,24 @@ router.use((err, req, res, next) => {
 })
 
 function checkId(req, res, next) {
-  next()
+  const {id} = req.params;
+  try{
+    const post = await Post.getById(id);
+    if(post) {
+      req.post = post;
+      next();
+    }else{
+      const err = new Error('invalid id');
+      err.statusCode = 404;
+      next(err);
+    }
+   
+  }
+  catch(er){
+    err.statusCode = 500;
+    err.message = 'error retriving post';
+    next(er);
+  }
 }
 
 function checkPayload(req, res, next) {
